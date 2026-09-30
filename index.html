@@ -1,42 +1,169 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UFT-8">
-<title> SAMGY </title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMGY SALUD - Base de Datos de Enfermería Escolar</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-<!-- Google fonts -->
- <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap" rel="stylesheet">
-    </head>
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="logo-box">
+          <i class="fa-solid fa-cat logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">
+            <span class="brand-name">SAMGY</span>
+            <span class="brand-badge">SALUD</span>
+          </div>
+          <p class="brand-subtitle">Base de Datos de Enfermería Escolar</p>
+        </div>
+      </div>
 
-    <body>
-        <header id="header">
-  <h1>SAMGY</h1>
-  <nav>
-    <a href="#">Inicio</a>
-    <a href="#">Sistema</a>
-    <a href="#">Beneficios</a>
-    <a href="#">Contacto</a>
-  </nav>
-</header>
+      <button class="menu-btn" id="menuToggle" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars" id="menuIcon"></i>
+      </button>
+    </div>
 
-<main>
-    <section class="hero">
-        <h2>Gestion de salud escolar inteligente</h2>
-        <button onclick="cambiaColor()">Probar Sistema</button>
-    
+    <nav class="dropdown-menu" id="dropdownMenu">
+      <ul>
+        <li><a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+        <li><a href="#quienes-somos"><i class="fa-solid fa-users"></i> Quiénes Somos & QA</a></li>
+        <li><a href="#estudiantes"><i class="fa-solid fa-graduation-cap"></i> Estudiantes</a></li>
+        <li><a href="#visitas"><i class="fa-solid fa-user-nurse"></i> Registro de Visitas</a></li>
+        <li><a href="#alertas"><i class="fa-solid fa-triangle-exclamation"></i> Alergias y Alertas</a></li>
+        <li><a href="#reportes"><i class="fa-solid fa-file-medical"></i> Reportes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main-content" id="inicio">
+
+    <section class="hero-banner">
+      <span class="hero-tag">MÓDULO DE SALUD ESCOLAR</span>
+      <h1 class="hero-title">Sistema SAMGY de Enfermería</h1>
+      <p class="hero-description">
+        Gestión eficiente y digital de registros médicos estudiantiles, atención rápida de consultas y control de salud escolar sin papel.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn btn-white" id="btnNuevaVisita">
+          <i class="fa-solid fa-square-plus"></i> Registrar Nueva Visita
+        </button>
+        <button class="btn btn-outline" id="btnEscanearQR">
+          <i class="fa-solid fa-qrcode"></i> Escanear Código QR
+        </button>
+      </div>
     </section>
 
-    <section>
-      <h2>¿Qué es SAMGY?</h2>
-    <p>Es una plataforma web que permite organizar y gestionar la información médica de estudiantes.</p>  
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-info">
+          <span class="metric-label">ESTUDIANTES REGISTRADOS</span>
+          <span class="metric-value">3</span>
+          <span class="metric-sub status-green">
+            <i class="fa-solid fa-circle-check"></i> Base de datos activa
+          </span>
+        </div>
+        <div class="metric-icon icon-blue">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-info">
+          <span class="metric-label">VISITAS DE HOY</span>
+          <span class="metric-value">0</span>
+          <span class="metric-sub status-blue">
+            <i class="fa-solid fa-clock"></i> En enfermería escolar
+          </span>
+        </div>
+        <div class="metric-icon icon-cyan">
+          <i class="fa-solid fa-user-nurse"></i>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-info">
+          <span class="metric-label">ALERGIAS / ALERTAS</span>
+          <span class="metric-value">2</span>
+          <span class="metric-sub status-orange">
+            <i class="fa-solid fa-triangle-exclamation"></i> Atención prioritaria
+          </span>
+        </div>
+        <div class="metric-icon icon-yellow">
+          <i class="fa-solid fa-hand-holding-medical"></i>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-info">
+          <span class="metric-label">CONTROL SANITARIO</span>
+          <span class="metric-value">100%</span>
+          <span class="metric-sub status-green">
+            <i class="fa-solid fa-leaf"></i> Sin uso de papel
+          </span>
+        </div>
+        <div class="metric-icon icon-green">
+          <i class="fa-solid fa-file-circle-plus"></i>
+        </div>
+      </div>
     </section>
-</main>
 
-<footer>
-      <p>© 2026 Proyecto SAMGY</p>
-</footer>
+    <section class="about-section" id="quienes-somos">
+      <div class="about-header">
+        <h2>¿Quiénes Somos?</h2>
+        <p>Conoce al equipo encargado de desarrollar y respaldar el sistema SAMGY Salud.</p>
+      </div>
 
-<script src="sript.js"></script>
-    </body>
+      <div class="qa-highlight-card">
+        <div class="qa-badge">
+          <i class="fa-solid fa-shield-halved"></i> Control de Calidad y QA
+        </div>
+
+        <h3 class="qa-title">Garantizando la máxima calidad y confiabilidad</h3>
+
+        <p class="qa-text">
+          Como <strong>Tester del Sistema (QA)</strong>, mi objetivo principal es asegurar que cada función de la plataforma opere de manera fluida, exacta y sin errores. Me encargo de realizar pruebas rigurosas en la gestión de registros médicos, alertas sanitarias y flujos de atención para ofrecer una experiencia rápida, segura y confiable a todo el personal de salud escolar.
+        </p>
+
+        <div class="qa-pillars">
+          <div class="pillar-item">
+            <i class="fa-solid fa-vial-circle-check"></i>
+            <div>
+              <h4>Pruebas Funcionales</h4>
+              <p>Validación continua de módulos y formularios para prevenir fallos en la atenciones.</p>
+            </div>
+          </div>
+
+          <div class="pillar-item">
+            <i class="fa-solid fa-lock"></i>
+            <div>
+              <h4>Seguridad de Datos</h4>
+              <p>Verificación de la integridad y protección de la información médica escolar.</p>
+            </div>
+          </div>
+
+          <div class="pillar-item">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <div>
+              <h4>Usabilidad (UX)</h4>
+              <p>Optimización de la interfaz para lograr accesibilidad e interacción sin fricciones.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 SAMGY SALUD — Sistema de Control y Gestión de Enfermería Escolar</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
 </html>
