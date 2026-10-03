@@ -1,4 +1,3 @@
-
 const iniciales = [
   {
     id: "1001234567",
@@ -20,9 +19,7 @@ const iniciales = [
   }
 ];
 
-
 let baseDatosEstudiantes = JSON.parse(localStorage.getItem("samgy_estudiantes")) || iniciales;
-
 
 window.cambiarPestana = (nombrePestana) => {
   const secciones = document.querySelectorAll('.vista-seccion');
@@ -41,13 +38,11 @@ window.cambiarPestana = (nombrePestana) => {
     btnActivo.classList.add('activo');
   }
 
- 
   const dropdownMenu = document.getElementById("dropdownMenu");
   if (dropdownMenu && dropdownMenu.classList.contains("active")) {
     dropdownMenu.classList.remove("active");
   }
 };
-
 
 function guardarEnStorage() {
   localStorage.setItem("samgy_estudiantes", JSON.stringify(baseDatosEstudiantes));
@@ -55,14 +50,12 @@ function guardarEnStorage() {
   actualizarMetricas();
 }
 
-
 function actualizarMetricas() {
   const metricTotal = document.getElementById("metricTotalEstudiantes");
   if (metricTotal) {
     metricTotal.textContent = baseDatosEstudiantes.length;
   }
 }
-
 
 function renderizarDirectorio() {
   const contenedorGrados = document.getElementById("contenedorGrados");
@@ -82,7 +75,6 @@ function renderizarDirectorio() {
     porGrados[grado].push(est);
   });
 
-  
   Object.keys(porGrados).forEach(grado => {
     const bloque = document.createElement("div");
     bloque.className = "bloque-grado";
@@ -92,28 +84,27 @@ function renderizarDirectorio() {
       tarjetasHTML += `
         <div class="casilla-ficha">
           <div class="casilla-ficha-header">
-            <p><strong> ${est.nombre}</strong></p>
+            <h4>${est.nombre}</h4>
           </div>
           <div class="casilla-body">
-            <p><strong> Doc:</strong> ${est.documento}</p>
-            <p><strong> Sangre:</strong> ${est.tipoSangre}</p>
-            <p><strong> Alergias:</strong> ${est.alergias}</p>
-            <p><strong> Tutor:</strong> ${est.tutor}</p>
+            <p><strong>Doc:</strong> ${est.documento}</p>
+            <p><strong>Sangre:</strong> ${est.tipoSangre}</p>
+            <p><strong>Alergias:</strong> ${est.alergias}</p>
+            <p><strong>Tutor:</strong> ${est.tutor}</p>
           </div>
           <div class="acciones-casilla">
-            <button class="btn-editar" onclick="cargarFormularioEdicion('${est.id}')"> Editar</button>
-            <button class="btn-eliminar" onclick="eliminarEstudiante('${est.id}', '${est.nombre.replace(/'/g, "\\'")}')"> Eliminar</button>
+            <button class="btn-editar" onclick="cargarFormularioEdicion('${est.id}')">Editar</button>
+            <button class="btn-eliminar" onclick="eliminarEstudiante('${est.id}', '${est.nombre.replace(/'/g, "\\'")}')">Eliminar</button>
           </div>
         </div>
       `;
     });
     tarjetasHTML += `</div>`;
 
-    bloque.innerHTML = `<h4> Grado: ${grado} (${porGrados[grado].length} estudiantes)</h4>${tarjetasHTML}`;
+    bloque.innerHTML = `<h4>Grado: ${grado} (${porGrados[grado].length} estudiantes)</h4>${tarjetasHTML}`;
     contenedorGrados.appendChild(bloque);
   });
 }
-
 
 window.cargarFormularioEdicion = function(id) {
   const estudiante = baseDatosEstudiantes.find(est => est.id === String(id));
@@ -145,7 +136,6 @@ window.eliminarEstudiante = function(id, nombre) {
   }
 };
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
   const dropdownMenu = document.getElementById("dropdownMenu");
@@ -156,13 +146,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const mensajeGuardado = document.getElementById("mensajeGuardado");
   const btnCancelarEdicion = document.getElementById("btnCancelarEdicion");
 
-
   if (menuToggle && dropdownMenu) {
     menuToggle.addEventListener("click", () => {
       dropdownMenu.classList.toggle("active");
     });
   }
-
 
   const realizarBusqueda = () => {
     const termino = inputBusqueda.value.trim().toLowerCase();
@@ -180,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (encontrado) {
       mensajeResultado.innerHTML = `
         <div style="background: #ffffff; border: 2px solid #4FB3D9; border-radius: 8px; padding: 15px; margin-top: 15px;">
-          <h4 style="margin: 0 0 8px 0; color: #03658C;"> Ficha Médica Encontrada</h4>
+          <h4 style="margin: 0 0 8px 0; color: #03658C;">Ficha Médica Encontrada</h4>
           <p style="margin: 4px 0;"><strong>Estudiante:</strong> ${encontrado.nombre}</p>
           <p style="margin: 4px 0;"><strong>Documento:</strong> ${encontrado.documento}</p>
           <p style="margin: 4px 0;"><strong>Grado:</strong> ${encontrado.grado}</p>
@@ -241,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetearFormulario() {
     formEstudiante.reset();
     document.getElementById("regId").value = "";
-    document.getElementById("tituloFormulario").textContent = " Registrar Nuevo Estudiante";
+    document.getElementById("tituloFormulario").textContent = "Registrar Nuevo Estudiante";
     document.getElementById("btnGuardar").textContent = "Guardar Ficha en Sistema";
     btnCancelarEdicion.style.display = "none";
   }
