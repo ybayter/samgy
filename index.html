@@ -1,68 +1,149 @@
-<div id="vista-fichas" class="vista-seccion activo">
-  <h2>🗂️ Módulo de Fichas Estudiantiles</h2>
-  <br>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMGY Salud - Base de Datos Escolar</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-  <div class="search-container">
-    <h3>🔍 Consultar Ficha Médica Rápidamente</h3>
-    <div class="search-box">
-      <input type="text" id="inputBusqueda" placeholder="Buscar por nombre o número de documento...">
-      <button type="button" id="btnBuscar" class="btn btn-white" style="background-color: var(--header-bg); color: white;">Buscar</button>
-    </div>
-    <div id="mensajeResultado"></div>
-  </div>
-
-  <div class="form-container">
-    <h3 id="tituloFormulario">➕ Registrar Nuevo Estudiante</h3>
-    <form id="formEstudiante">
-      <input type="hidden" id="regId">
-      
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="regNombre">Nombre completo:</label>
-          <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
-        </div>
-
-        <div class="form-group">
-          <label for="regDocumento">Documento de identidad:</label>
-          <input type="text" id="regDocumento" placeholder="Ej: 1001234567" required>
-        </div>
-
-        <div class="form-group">
-          <label for="regGrado">Grado escolar:</label>
-          <select id="regGrado" required>
-            <option value="">Selecciona un grado...</option>
-            <option value="6°A">6°A</option>
-            <option value="10°">10°</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="regSangre">Tipo de sangre:</label>
-          <input type="text" id="regSangre" placeholder="Ej: O+" required>
-        </div>
-
-        <div class="form-group">
-          <label for="regAlergias">Alergias / Condiciones:</label>
-          <input type="text" id="regAlergias" placeholder="Ej: Penicilina o Ninguna">
-        </div>
-
-        <div class="form-group">
-          <label for="regTutor">Nombre y Teléfono del Tutor:</label>
-          <input type="text" id="regTutor" placeholder="Ej: Carlos Pérez (3001234567)" required>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" id="btnGuardar" class="btn btn-white" style="background-color: var(--header-bg); color: white;">Guardar Ficha en Sistema</button>
-          <button type="button" id="btnCancelarEdicion" class="btn btn-outline" style="display: none; color: var(--text-dark); border-color: var(--border-color);">Cancelar</button>
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="logo-box">S</div>
+        <div>
+          <div class="brand-title">
+            <span class="brand-name">SAMGY</span>
+            <span class="brand-badge">SALUD</span>
+          </div>
+          <div class="brand-subtitle">Colegio San Alberto Magno — Base de Datos Escolar</div>
         </div>
       </div>
-    </form>
-    <p id="mensajeGuardado" style="margin-top: 10px;"></p>
-  </div>
+      <button id="menuToggle" class="menu-btn" aria-label="Abrir menú">&#9776;</button>
+    </div>
 
-  <h3>📂 Directorio de Estudiantes (Clasificado por Grados)</h3>
-  <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
-    Fichas activas distribuidas en casillas organizadas según el grado escolar correspondiente.
-  </p>
-  <div id="contenedorGrados"></div>
-</div>
+    <nav id="dropdownMenu" class="dropdown-menu">
+      <ul>
+        <li><a onclick="cambiarPestana('inicio')">Inicio</a></li>
+        <li><a onclick="cambiarPestana('fichas')">Módulo de Fichas Estudiantiles</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main-content">
+
+    <section id="vista-inicio" class="vista-seccion activo">
+      <div class="hero-banner">
+        <span class="hero-tag">MÓDULO DE SALUD ESCOLAR</span>
+        <h1 class="hero-title">Sistema SAMGY de Enfermería</h1>
+        <p class="hero-description">
+          Gestión inteligente, eficiente y digital para la organización y control sanitario de la comunidad estudiantil.
+          Reducción de papel y atención rápida de consultas.
+        </p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-white" onclick="cambiarPestana('fichas')">Registrar Nueva Visita / Estudiante</button>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-info">
+            <span class="metric-label">TOTAL ESTUDIANTES</span>
+            <span id="metricTotalEstudiantes" class="metric-value">0</span>
+            <span class="metric-sub status-green">Fichas en base de datos</span>
+          </div>
+          <div class="metric-icon icon-blue">E</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-info">
+            <span class="metric-label">ESTADO DEL SISTEMA</span>
+            <span class="metric-value">Activo</span>
+            <span class="metric-sub status-blue">Servidor operativo</span>
+          </div>
+          <div class="metric-icon icon-cyan">S</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vista-fichas" class="vista-seccion">
+      <h2>Módulo de Fichas Estudiantiles</h2>
+
+      <div class="search-container">
+        <h3>Consultar Ficha Médica Rápidamente</h3>
+        <div class="search-box">
+          <input type="text" id="inputBusqueda" placeholder="Buscar por nombre o número de documento...">
+          <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
+        </div>
+        <div id="mensajeResultado"></div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-header">
+          <h3 id="tituloFormulario">Registrar Nuevo Estudiante</h3>
+          <p class="form-subtitle">Ingresa los datos personales y de salud para guardar el registro en el sistema</p>
+        </div>
+
+        <form id="formEstudiante">
+          <input type="hidden" id="regId">
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="regNombre">Nombre completo</label>
+              <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
+            </div>
+
+            <div class="form-group">
+              <label for="regDocumento">Documento de identidad</label>
+              <input type="text" id="regDocumento" placeholder="Ej: 1001234567" required>
+            </div>
+
+            <div class="form-group">
+              <label for="regGrado">Grado escolar</label>
+              <select id="regGrado" required>
+                <option value="">Selecciona un grado...</option>
+                <option value="6°A">6°A</option>
+                <option value="10°">10°</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="regSangre">Tipo de sangre</label>
+              <input type="text" id="regSangre" placeholder="Ej: O+" required>
+            </div>
+
+            <div class="form-group">
+              <label for="regAlergias">Alergias / Condiciones médicas</label>
+              <input type="text" id="regAlergias" placeholder="Ej: Penicilina o Ninguna">
+            </div>
+
+            <div class="form-group">
+              <label for="regTutor">Nombre y Teléfono del Tutor</label>
+              <input type="text" id="regTutor" placeholder="Ej: Carlos Pérez (3001234567)" required>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar Ficha en Sistema</button>
+              <button type="button" id="btnCancelarEdicion" class="btn btn-secondary" style="display: none;">Cancelar Edición</button>
+            </div>
+          </div>
+        </form>
+        <p id="mensajeGuardado"></p>
+      </div>
+
+      <h3>Directorio de Estudiantes (Clasificado por Grados)</h3>
+      <p class="section-desc">Fichas activas distribuidas en casillas organizadas según el grado escolar correspondiente.</p>
+      
+      <div id="contenedorGrados"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>SAMGY Salud — Colegio San Alberto Magno &copy; 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
