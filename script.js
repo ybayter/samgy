@@ -25,23 +25,17 @@ window.cambiarPestana = (nombrePestana) => {
   const secciones = document.querySelectorAll('.vista-seccion');
   secciones.forEach(sec => sec.classList.remove('activo'));
 
-  const botones = document.querySelectorAll('.nav-btn');
-  botones.forEach(btn => btn.classList.remove('activo'));
-
   const seccionActiva = document.getElementById(`vista-${nombrePestana}`);
   if (seccionActiva) {
     seccionActiva.classList.add('activo');
-  }
-
-  const btnActivo = Array.from(botones).find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(nombrePestana));
-  if (btnActivo) {
-    btnActivo.classList.add('activo');
   }
 
   const dropdownMenu = document.getElementById("dropdownMenu");
   if (dropdownMenu && dropdownMenu.classList.contains("active")) {
     dropdownMenu.classList.remove("active");
   }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 function guardarEnStorage() {
@@ -156,8 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const termino = inputBusqueda.value.trim().toLowerCase();
 
     if (termino === "") {
-      mensajeResultado.style.color = "#d9534f";
-      mensajeResultado.innerHTML = "⚠️ Ingresa un nombre o documento para buscar.";
+      mensajeResultado.style.color = "#ef4444";
+      mensajeResultado.innerHTML = "Ingresa un nombre o documento para buscar.";
       return;
     }
 
@@ -167,19 +161,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (encontrado) {
       mensajeResultado.innerHTML = `
-        <div style="background: #ffffff; border: 2px solid #4FB3D9; border-radius: 8px; padding: 15px; margin-top: 15px;">
-          <h4 style="margin: 0 0 8px 0; color: #03658C;">Ficha Médica Encontrada</h4>
+        <div style="background: #ffffff; border: 1px solid #0284c7; border-radius: 8px; padding: 16px; margin-top: 16px;">
+          <h4 style="margin: 0 0 8px 0; color: #03698e;">Ficha Médica Encontrada</h4>
           <p style="margin: 4px 0;"><strong>Estudiante:</strong> ${encontrado.nombre}</p>
           <p style="margin: 4px 0;"><strong>Documento:</strong> ${encontrado.documento}</p>
           <p style="margin: 4px 0;"><strong>Grado:</strong> ${encontrado.grado}</p>
           <p style="margin: 4px 0;"><strong>Sangre:</strong> ${encontrado.tipoSangre}</p>
           <p style="margin: 4px 0;"><strong>Alergias:</strong> ${encontrado.alergias}</p>
           <p style="margin: 4px 0;"><strong>Tutor:</strong> ${encontrado.tutor}</p>
-          <button onclick="cargarFormularioEdicion('${encontrado.id}')" style="margin-top: 10px; background: #03658C; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">✏️ Editar esta Ficha</button>
+          <button onclick="cargarFormularioEdicion('${encontrado.id}')" class="btn btn-primary" style="margin-top: 10px; font-size: 12px; padding: 6px 12px;">Editar esta Ficha</button>
         </div>
       `;
     } else {
-      mensajeResultado.style.color = "#d9534f";
+      mensajeResultado.style.color = "#ef4444";
       mensajeResultado.innerHTML = `No existe ninguna ficha registrada para "${inputBusqueda.value}".`;
     }
   };
@@ -211,13 +205,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const indice = baseDatosEstudiantes.findIndex(est => est.id === idEditando);
         if (indice !== -1) {
           baseDatosEstudiantes[indice] = { id: idEditando, nombre, documento, grado, tipoSangre, alergias, tutor };
-          mensajeGuardado.style.color = "#28a745";
+          mensajeGuardado.style.color = "#059669";
           mensajeGuardado.innerHTML = `Ficha de <strong>${nombre}</strong> actualizada correctamente.`;
         }
       } else {
         const nuevoEstudiante = { id: Date.now().toString(), nombre, documento, grado, tipoSangre, alergias, tutor };
         baseDatosEstudiantes.push(nuevoEstudiante);
-        mensajeGuardado.style.color = "#28a745";
+        mensajeGuardado.style.color = "#059669";
         mensajeGuardado.innerHTML = `Ficha de <strong>${nombre}</strong> guardada exitosamente.`;
       }
 
