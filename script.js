@@ -1,384 +1,253 @@
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-}
-
-:root {
-  --bg-primary: #f4f8fb;
-  --header-bg: #03698e;
-  --hero-bg: #0f82ad;
-  --hero-card-bg: #1d9bc8;
-  --card-bg: #ffffff;
-  --text-dark: #2d3748;
-  --text-muted: #64748b;
-  --primary-blue: #0284c7;
-  --accent-cyan: #06b6d4;
-  --accent-green: #10b981;
-  --accent-orange: #f59e0b;
-  --border-color: #e2e8f0;
-}
-
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-dark);
-  line-height: 1.5;
-}
+const iniciales = [
+  {
+    id: "1001234567",
+    nombre: "Juan Pablo Pérez",
+    documento: "1001234567",
+    grado: "10°",
+    tipoSangre: "O+",
+    alergias: "Penicilina",
+    tutor: "Carlos Pérez (3001234567)"
+  },
+  {
+    id: "1009876543",
+    nombre: "María Camargo",
+    documento: "1009876543",
+    grado: "6°A",
+    tipoSangre: "A+",
+    alergias: "Ninguna",
+    tutor: "Ana Camargo (3109876543)"
+  }
+];
 
 
-.navbar {
-  background-color: var(--header-bg);
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
+let baseDatosEstudiantes = JSON.parse(localStorage.getItem("samgy_estudiantes")) || iniciales;
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+window.cambiarPestana = (nombrePestana) => {
+  const secciones = document.querySelectorAll('.vista-seccion');
+  secciones.forEach(sec => sec.classList.remove('activo'));
 
-.logo-box {
-  background-color: white;
-  color: var(--header-bg);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
+  const botones = document.querySelectorAll('.nav-btn');
+  botones.forEach(btn => btn.classList.remove('activo'));
 
-.brand-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  const seccionActiva = document.getElementById(`vista-${nombrePestana}`);
+  if (seccionActiva) {
+    seccionActiva.classList.add('activo');
+  }
 
-.brand-name {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
+  const btnActivo = Array.from(botones).find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(nombrePestana));
+  if (btnActivo) {
+    btnActivo.classList.add('activo');
+  }
 
-.brand-badge {
-  background-color: rgba(255, 255, 255, 0.25);
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
+ 
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  if (dropdownMenu && dropdownMenu.classList.contains("active")) {
+    dropdownMenu.classList.remove("active");
+  }
+};
 
-.brand-subtitle {
-  font-size: 12px;
-  color: #e0f2fe;
-}
 
-.menu-btn {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 8px;
-  transition: transform 0.2s ease;
-}
-
-.menu-btn:hover {
-  transform: scale(1.1);
-}
-
-/* Menú Desplegable */
-.dropdown-menu {
-  display: none;
-  background-color: #025370;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.dropdown-menu.active {
-  display: block;
-}
-
-.dropdown-menu ul {
-  list-style: none;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 8px 0;
-}
-
-.dropdown-menu li a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 24px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.2s;
-}
-
-.dropdown-menu li a:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+function guardarEnStorage() {
+  localStorage.setItem("samgy_estudiantes", JSON.stringify(baseDatosEstudiantes));
+  renderizarDirectorio();
+  actualizarMetricas();
 }
 
 
-.main-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 16px;
-}
-
-.hero-banner {
-  background: linear-gradient(135deg, var(--hero-bg) 0%, var(--hero-card-bg) 100%);
-  color: white;
-  padding: 32px 28px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(15, 130, 173, 0.25);
-  margin-bottom: 28px;
-}
-
-.hero-tag {
-  background-color: rgba(255, 255, 255, 0.2);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 20px;
-  display: inline-block;
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
-}
-
-.hero-title {
-  font-size: 32px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-
-.hero-description {
-  font-size: 16px;
-  color: #f0f9ff;
-  max-width: 750px;
-  margin-bottom: 24px;
-  line-height: 1.6;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.btn-white {
-  background-color: white;
-  color: var(--hero-bg);
-}
-
-.btn-white:hover {
-  background-color: #f8fafc;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.btn-outline {
-  background-color: rgba(3, 105, 142, 0.4);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.btn-outline:hover {
-  background-color: rgba(3, 105, 142, 0.7);
-  transform: translateY(-2px);
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.metric-card {
-  background-color: var(--card-bg);
-  border-radius: 14px;
-  padding: 20px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  border: 1px solid var(--border-color);
-}
-
-.metric-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.metric-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
-
-.metric-value {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--text-dark);
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-
-.metric-sub {
-  font-size: 13px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.status-green { color: #059669; }
-.status-blue { color: #0284c7; }
-.status-orange { color: #d97706; }
-
-.metric-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.icon-blue { background-color: #e0f2fe; color: #0284c7; }
-.icon-cyan { background-color: #e0f7fa; color: #00acc1; }
-.icon-yellow { background-color: #fef3c7; color: #d97706; }
-.icon-green { background-color: #d1fae5; color: #059669; }
-
-
-.about-section {
-  background-color: white;
-  border-radius: 16px;
-  padding: 32px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-}
-
-.about-header h2 {
-  font-size: 24px;
-  color: var(--text-dark);
-  margin-bottom: 4px;
-}
-
-.about-header p {
-  color: var(--text-muted);
-  font-size: 14px;
-  margin-bottom: 24px;
-}
-
-.qa-highlight-card {
-  background-color: #f8fafc;
-  border-left: 5px solid var(--hero-bg);
-  padding: 24px;
-  border-radius: 8px 12px 12px 8px;
-}
-
-.qa-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #e0f2fe;
-  color: var(--hero-bg);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-}
-
-.qa-title {
-  font-size: 18px;
-  color: var(--text-dark);
-  margin-bottom: 10px;
-}
-
-.qa-text {
-  color: #475569;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.qa-pillars {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.pillar-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: white;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-}
-
-.pillar-item i {
-  font-size: 20px;
-  color: var(--hero-bg);
-  margin-top: 2px;
-}
-
-.pillar-item h4 {
-  font-size: 14px;
-  color: var(--text-dark);
-  margin-bottom: 4px;
-}
-
-.pillar-item p {
-  font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.4;
+function actualizarMetricas() {
+  const metricTotal = document.getElementById("metricTotalEstudiantes");
+  if (metricTotal) {
+    metricTotal.textContent = baseDatosEstudiantes.length;
+  }
 }
 
 
-.footer {
-  text-align: center;
-  padding: 24px;
-  color: var(--text-muted);
-  font-size: 13px;
-  margin-top: 20px;
+function renderizarDirectorio() {
+  const contenedorGrados = document.getElementById("contenedorGrados");
+  if (!contenedorGrados) return;
+
+  contenedorGrados.innerHTML = "";
+
+  if (baseDatosEstudiantes.length === 0) {
+    contenedorGrados.innerHTML = "<p style='padding: 10px;'>No hay fichas registradas en el sistema actualmente.</p>";
+    return;
+  }
+
+  const porGrados = {};
+  baseDatosEstudiantes.forEach(est => {
+    const grado = est.grado;
+    if (!porGrados[grado]) porGrados[grado] = [];
+    porGrados[grado].push(est);
+  });
+
+  
+  Object.keys(porGrados).forEach(grado => {
+    const bloque = document.createElement("div");
+    bloque.className = "bloque-grado";
+    
+    let tarjetasHTML = `<div class="grid-estudiantes">`;
+    porGrados[grado].forEach(est => {
+      tarjetasHTML += `
+        <div class="casilla-ficha">
+          <div class="casilla-ficha-header">
+            <p><strong> ${est.nombre}</strong></p>
+          </div>
+          <div class="casilla-body">
+            <p><strong> Doc:</strong> ${est.documento}</p>
+            <p><strong> Sangre:</strong> ${est.tipoSangre}</p>
+            <p><strong> Alergias:</strong> ${est.alergias}</p>
+            <p><strong> Tutor:</strong> ${est.tutor}</p>
+          </div>
+          <div class="acciones-casilla">
+            <button class="btn-editar" onclick="cargarFormularioEdicion('${est.id}')"> Editar</button>
+            <button class="btn-eliminar" onclick="eliminarEstudiante('${est.id}', '${est.nombre.replace(/'/g, "\\'")}')"> Eliminar</button>
+          </div>
+        </div>
+      `;
+    });
+    tarjetasHTML += `</div>`;
+
+    bloque.innerHTML = `<h4> Grado: ${grado} (${porGrados[grado].length} estudiantes)</h4>${tarjetasHTML}`;
+    contenedorGrados.appendChild(bloque);
+  });
 }
+
+
+window.cargarFormularioEdicion = function(id) {
+  const estudiante = baseDatosEstudiantes.find(est => est.id === String(id));
+  if (!estudiante) return;
+
+  document.getElementById("regId").value = estudiante.id;
+  document.getElementById("regNombre").value = estudiante.nombre;
+  document.getElementById("regDocumento").value = estudiante.documento;
+  document.getElementById("regGrado").value = estudiante.grado;
+  document.getElementById("regSangre").value = estudiante.tipoSangre;
+  document.getElementById("regAlergias").value = estudiante.alergias;
+  document.getElementById("regTutor").value = estudiante.tutor;
+
+  document.getElementById("tituloFormulario").textContent = `Editando Ficha de: ${estudiante.nombre}`;
+  document.getElementById("btnGuardar").textContent = "Guardar Cambios";
+  document.getElementById("btnCancelarEdicion").style.display = "inline-block";
+
+  cambiarPestana('fichas');
+};
+
+window.eliminarEstudiante = function(id, nombre) {
+  const confirmacion = confirm(`¿Deseas eliminar permanentemente la ficha médica de "${nombre}"?`);
+  
+  if (confirmacion) {
+    baseDatosEstudiantes = baseDatosEstudiantes.filter(est => est.id !== String(id));
+    guardarEnStorage();
+    const mensajeResultado = document.getElementById("mensajeResultado");
+    if (mensajeResultado) mensajeResultado.innerHTML = "";
+  }
+};
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  const btnBuscar = document.getElementById("btnBuscar");
+  const inputBusqueda = document.getElementById("inputBusqueda");
+  const mensajeResultado = document.getElementById("mensajeResultado");
+  const formEstudiante = document.getElementById("formEstudiante");
+  const mensajeGuardado = document.getElementById("mensajeGuardado");
+  const btnCancelarEdicion = document.getElementById("btnCancelarEdicion");
+
+
+  if (menuToggle && dropdownMenu) {
+    menuToggle.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("active");
+    });
+  }
+
+
+  const realizarBusqueda = () => {
+    const termino = inputBusqueda.value.trim().toLowerCase();
+
+    if (termino === "") {
+      mensajeResultado.style.color = "#d9534f";
+      mensajeResultado.innerHTML = "⚠️ Ingresa un nombre o documento para buscar.";
+      return;
+    }
+
+    const encontrado = baseDatosEstudiantes.find(est => 
+      est.nombre.toLowerCase().includes(termino) || est.documento.includes(termino)
+    );
+
+    if (encontrado) {
+      mensajeResultado.innerHTML = `
+        <div style="background: #ffffff; border: 2px solid #4FB3D9; border-radius: 8px; padding: 15px; margin-top: 15px;">
+          <h4 style="margin: 0 0 8px 0; color: #03658C;"> Ficha Médica Encontrada</h4>
+          <p style="margin: 4px 0;"><strong>Estudiante:</strong> ${encontrado.nombre}</p>
+          <p style="margin: 4px 0;"><strong>Documento:</strong> ${encontrado.documento}</p>
+          <p style="margin: 4px 0;"><strong>Grado:</strong> ${encontrado.grado}</p>
+          <p style="margin: 4px 0;"><strong>Sangre:</strong> ${encontrado.tipoSangre}</p>
+          <p style="margin: 4px 0;"><strong>Alergias:</strong> ${encontrado.alergias}</p>
+          <p style="margin: 4px 0;"><strong>Tutor:</strong> ${encontrado.tutor}</p>
+          <button onclick="cargarFormularioEdicion('${encontrado.id}')" style="margin-top: 10px; background: #03658C; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">✏️ Editar esta Ficha</button>
+        </div>
+      `;
+    } else {
+      mensajeResultado.style.color = "#d9534f";
+      mensajeResultado.innerHTML = `No existe ninguna ficha registrada para "${inputBusqueda.value}".`;
+    }
+  };
+
+  if (btnBuscar) btnBuscar.addEventListener("click", realizarBusqueda);
+  if (inputBusqueda) inputBusqueda.addEventListener("keypress", (e) => { if (e.key === "Enter") realizarBusqueda(); });
+
+  if (formEstudiante) {
+    formEstudiante.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const idEditando = document.getElementById("regId").value;
+      const nombre = document.getElementById("regNombre").value.trim();
+      const documento = document.getElementById("regDocumento").value.trim();
+      const grado = document.getElementById("regGrado").value;
+      const tipoSangre = document.getElementById("regSangre").value.trim();
+      const alergias = document.getElementById("regAlergias").value.trim();
+      const tutor = document.getElementById("regTutor").value.trim();
+
+      const confirmacion = confirm(
+        idEditando 
+          ? `¿Estás seguro de que deseas actualizar la información de "${nombre}"?`
+          : `¿Estás seguro de que deseas guardar la ficha médica de "${nombre}"?`
+      );
+
+      if (!confirmacion) return;
+
+      if (idEditando) {
+        const indice = baseDatosEstudiantes.findIndex(est => est.id === idEditando);
+        if (indice !== -1) {
+          baseDatosEstudiantes[indice] = { id: idEditando, nombre, documento, grado, tipoSangre, alergias, tutor };
+          mensajeGuardado.style.color = "#28a745";
+          mensajeGuardado.innerHTML = `Ficha de <strong>${nombre}</strong> actualizada correctamente.`;
+        }
+      } else {
+        const nuevoEstudiante = { id: Date.now().toString(), nombre, documento, grado, tipoSangre, alergias, tutor };
+        baseDatosEstudiantes.push(nuevoEstudiante);
+        mensajeGuardado.style.color = "#28a745";
+        mensajeGuardado.innerHTML = `Ficha de <strong>${nombre}</strong> guardada exitosamente.`;
+      }
+
+      guardarEnStorage();
+      resetearFormulario();
+    });
+  }
+
+  function resetearFormulario() {
+    formEstudiante.reset();
+    document.getElementById("regId").value = "";
+    document.getElementById("tituloFormulario").textContent = " Registrar Nuevo Estudiante";
+    document.getElementById("btnGuardar").textContent = "Guardar Ficha en Sistema";
+    btnCancelarEdicion.style.display = "none";
+  }
+
+  if (btnCancelarEdicion) btnCancelarEdicion.addEventListener("click", resetearFormulario);
+
+  renderizarDirectorio();
+  actualizarMetricas();
+});
