@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
- 
+  // EVENTOS DE BÚSQUEDA
   const btnBuscar = document.getElementById("btnBuscar");
   const inputBusqueda = document.getElementById("inputBusqueda");
   const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
@@ -278,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // FORMULARIO DE REGISTRO / EDICIÓN ESTUDIANTE
   const formEstudiante = document.getElementById("formEstudiante");
   if (formEstudiante) {
     formEstudiante.addEventListener("submit", (e) => {
@@ -322,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  
+  // FORMULARIO DE NUEVA CONSULTA
   const formConsulta = document.getElementById("formConsulta");
   if (formConsulta) {
     formConsulta.addEventListener("submit", (e) => {
