@@ -1,350 +1,68 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAMGY SALUD - Base de Datos de Enfermería Escolar</title>
-  <link rel="stylesheet" href="style.css">
-  
-  <!-- FontAwesome & Tipografías Oficiales (Montserrat y Open Sans) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body>
+<div id="vista-fichas" class="vista-seccion activo">
+  <h2>🗂️ Módulo de Fichas Estudiantiles</h2>
+  <br>
 
-  <!-- BARRA DE NAVEGACIÓN PRINCIPAL -->
-  <header class="navbar" id="header">
-    <div class="nav-container">
-      <div class="brand">
-        <div class="logo-box">
-          <!-- Logo de SAMGY (Soporta imagen o icono) -->
-          <img src="logo.png" alt="Logo SAMGY" class="img-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
-          <i class="fa-solid fa-cat logo-icon" style="display:none;"></i>
-        </div>
-        <div class="brand-text">
-          <div class="brand-title">
-            <span class="brand-name">SAMGY</span>
-            <span class="brand-badge">SALUD</span>
-          </div>
-          <p class="brand-subtitle">Colegio San Alberto Magno — Base de Datos Escolar</p>
-        </div>
-      </div>
-
-      <button class="menu-btn" id="menuToggle" aria-label="Abrir menú">
-        <i class="fa-solid fa-bars" id="menuIcon"></i>
-      </button>
+  <div class="search-container">
+    <h3>🔍 Consultar Ficha Médica Rápidamente</h3>
+    <div class="search-box">
+      <input type="text" id="inputBusqueda" placeholder="Buscar por nombre o número de documento...">
+      <button type="button" id="btnBuscar" class="btn btn-white" style="background-color: var(--header-bg); color: white;">Buscar</button>
     </div>
+    <div id="mensajeResultado"></div>
+  </div>
 
-    <!-- MENÚ DESPLEGABLE CONEXO A VISTAS Y MÓDULOS -->
-    <nav class="dropdown-menu" id="dropdownMenu">
-      <ul>
-        <li>
-          <a href="#inicio" onclick="cambiarPestana('inicio')">
-            <i class="fa-solid fa-chart-line"></i> Inicio
-          </a>
-        </li>
-        <li>
-          <a href="#fichas" onclick="cambiarPestana('fichas')" class="indent-item">
-            <i class="fa-solid fa-id-card"></i> Fichas Estudiantiles
-          </a>
-        </li>
-        <li>
-          <a href="#nueva-consulta" onclick="cambiarPestana('fichas')" class="menu-btn-green">
-            <i class="fa-solid fa-circle-plus"></i> Nueva Consulta / Registro
-          </a>
-        </li>
-        <li>
-          <a href="#directorio" onclick="cambiarPestana('directorio')">
-            <i class="fa-solid fa-folder-tree"></i> Directorio por Grados
-          </a>
-        </li>
-        <li>
-          <a href="#escanear-qr">
-            <i class="fa-solid fa-qrcode"></i> Escanear QR
-          </a>
-        </li>
-        <li>
-          <a href="#reportes">
-            <i class="fa-solid fa-file-medical"></i> Reportes
-          </a>
-        </li>
-        <li>
-          <a href="#integrantes" onclick="cambiarPestana('integrantes')">
-            <i class="fa-solid fa-users"></i> Equipo / Integrantes
-          </a>
-        </li>
-        <li>
-          <a href="#sistema" onclick="cambiarPestana('sistema')" class="menu-btn-yellow">
-            <i class="fa-solid fa-circle-info"></i> Sistema y Objetivos
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="main-content">
-
-    <!-- VISTA 1: INICIO Y DASHBOARD -->
-    <section id="vista-inicio" class="vista-seccion activo">
+  <div class="form-container">
+    <h3 id="tituloFormulario">➕ Registrar Nuevo Estudiante</h3>
+    <form id="formEstudiante">
+      <input type="hidden" id="regId">
       
-      <!-- Banner Hero -->
-      <div class="hero-banner">
-        <span class="hero-tag">MÓDULO DE SALUD ESCOLAR</span>
-        <h1 class="hero-title">Sistema SAMGY de Enfermería</h1>
-        <p class="hero-description">
-          Gestión inteligente, eficiente y digital para la organización y control sanitario de la comunidad estudiantil. Reducción de papel y atención rápida de consultas.
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-white" id="btnNuevaVisita" onclick="cambiarPestana('fichas')">
-            <i class="fa-solid fa-square-plus"></i> Registrar Nueva Visita / Estudiante
-          </button>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="regNombre">Nombre completo:</label>
+          <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
+        </div>
+
+        <div class="form-group">
+          <label for="regDocumento">Documento de identidad:</label>
+          <input type="text" id="regDocumento" placeholder="Ej: 1001234567" required>
+        </div>
+
+        <div class="form-group">
+          <label for="regGrado">Grado escolar:</label>
+          <select id="regGrado" required>
+            <option value="">Selecciona un grado...</option>
+            <option value="6°A">6°A</option>
+            <option value="10°">10°</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="regSangre">Tipo de sangre:</label>
+          <input type="text" id="regSangre" placeholder="Ej: O+" required>
+        </div>
+
+        <div class="form-group">
+          <label for="regAlergias">Alergias / Condiciones:</label>
+          <input type="text" id="regAlergias" placeholder="Ej: Penicilina o Ninguna">
+        </div>
+
+        <div class="form-group">
+          <label for="regTutor">Nombre y Teléfono del Tutor:</label>
+          <input type="text" id="regTutor" placeholder="Ej: Carlos Pérez (3001234567)" required>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="btnGuardar" class="btn btn-white" style="background-color: var(--header-bg); color: white;">Guardar Ficha en Sistema</button>
+          <button type="button" id="btnCancelarEdicion" class="btn btn-outline" style="display: none; color: var(--text-dark); border-color: var(--border-color);">Cancelar</button>
         </div>
       </div>
+    </form>
+    <p id="mensajeGuardado" style="margin-top: 10px;"></p>
+  </div>
 
-      <!-- Tarjetas de Métricas -->
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-info">
-            <span class="metric-label">ESTUDIANTES REGISTRADOS</span>
-            <span class="metric-value" id="metricTotalEstudiantes">3</span>
-            <span class="metric-sub status-green">
-              <i class="fa-solid fa-circle-check"></i> Base de datos activa
-            </span>
-          </div>
-          <div class="metric-icon icon-blue">
-            <i class="fa-solid fa-graduation-cap"></i>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-info">
-            <span class="metric-label">VISITAS DE HOY</span>
-            <span class="metric-value">0</span>
-            <span class="metric-sub status-blue">
-              <i class="fa-solid fa-clock"></i> En enfermería escolar
-            </span>
-          </div>
-          <div class="metric-icon icon-cyan">
-            <i class="fa-solid fa-user-nurse"></i>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-info">
-            <span class="metric-label">ALERGIAS / ALERTAS</span>
-            <span class="metric-value">2</span>
-            <span class="metric-sub status-orange">
-              <i class="fa-solid fa-triangle-exclamation"></i> Atención prioritaria
-            </span>
-          </div>
-          <div class="metric-icon icon-yellow">
-            <i class="fa-solid fa-hand-holding-medical"></i>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-info">
-            <span class="metric-label">CONTROL SANITARIO</span>
-            <span class="metric-value">100%</span>
-            <span class="metric-sub status-green">
-              <i class="fa-solid fa-leaf"></i> Sin uso de papel
-            </span>
-          </div>
-          <div class="metric-icon icon-green">
-            <i class="fa-solid fa-file-circle-plus"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tarjeta QA / Destacado -->
-      <div class="about-section">
-        <div class="qa-highlight-card">
-          <div class="qa-badge">
-            <i class="fa-solid fa-shield-halved"></i> Control de Calidad y QA
-          </div>
-          <h3 class="qa-title">Garantizando la máxima calidad y confiabilidad</h3>
-          <p class="qa-text">
-            Como <strong>Tester del Sistema (QA)</strong>, el objetivo principal es asegurar que cada función de la plataforma opere de manera fluida, exacta y sin errores. Se realizan pruebas rigurosas en la gestión de registros médicos, alertas sanitarias y flujos de atención para ofrecer una experiencia rápida, segura y confiable a todo el personal de salud escolar.
-          </p>
-
-          <div class="qa-pillars">
-            <div class="pillar-item">
-              <i class="fa-solid fa-vial-circle-check"></i>
-              <div>
-                <h4>Pruebas Funcionales</h4>
-                <p>Validación continua de módulos y formularios para prevenir fallos en la atención.</p>
-              </div>
-            </div>
-
-            <div class="pillar-item">
-              <i class="fa-solid fa-lock"></i>
-              <div>
-                <h4>Seguridad de Datos</h4>
-                <p>Verificación de la integridad y protección de la información médica escolar.</p>
-              </div>
-            </div>
-
-            <div class="pillar-item">
-              <i class="fa-solid fa-wand-magic-sparkles"></i>
-              <div>
-                <h4>Usabilidad (UX)</h4>
-                <p>Optimización de la interfaz para lograr accesibilidad e interacción sin fricciones.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- VISTA 2: FICHAS ESTUDIANTILES (Registro y Búsqueda) -->
-    <section id="vista-fichas" class="vista-seccion">
-      <div class="seccion-fichas">
-        <h2><i class="fa-solid fa-id-card"></i> Módulo de Fichas Estudiantiles</h2>
-        
-        <div class="contenedor-caja">
-          <h4><i class="fa-solid fa-magnifying-glass"></i> Consultar Ficha Médica Rápidamente</h4>
-          <div class="busqueda-rapida">
-            <input type="text" id="inputBusqueda" placeholder="Buscar por nombre, apellido o documento...">
-            <button type="button" id="btnBuscar" class="btn btn-blue">Buscar</button>
-          </div>
-          <div id="mensajeResultado" class="mensaje-busqueda"></div>
-        </div>
-        <div class="contenedor-caja" style="margin-top: 20px;">
-          <h4 id="tituloFormulario"><i class="fa-solid fa-user-plus"></i> Registrar Nuevo Estudiante</h4>
-          
-          <form id="formEstudiante" class="form-grid">
-            <input type="hidden" id="regId">
-
-            <div>
-              <label><strong>Nombre completo:</strong></label>
-              <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
-            </div>
-            
-            <div>
-              <label><strong>Documento de identidad:</strong></label>
-              <input type="text" id="regDocumento" placeholder="Ej: 1001234567" required>
-            </div>
-
-            <div>
-              <label><strong>Grado escolar:</strong></label>
-              <select id="regGrado" required>
-                <option value="" disabled selected>Selecciona un grado...</option>
-                <option value="Preescolar">Preescolar</option>
-                <option value="1°">1°</option>
-                <option value="2°">2°</option>
-                <option value="3°">3°</option>
-                <option value="4°">4°</option>
-                <option value="5°">5°</option>
-                <option value="6°A">6°A</option>
-                <option value="6°B">6°B</option>
-                <option value="7°">7°</option>
-                <option value="8°">8°</option>
-                <option value="9°">9°</option>
-                <option value="10°">10°</option>
-                <option value="11°">11°</option>
-              </select>
-            </div>
-
-            <div>
-              <label><strong>Tipo de sangre:</strong></label>
-              <input type="text" id="regSangre" placeholder="Ej: O+" required>
-            </div>
-            
-            <div>
-              <label><strong>Alergias / Condiciones:</strong></label>
-              <input type="text" id="regAlergias" placeholder="Ej: Penicilina o Ninguna" required>
-            </div>
-            
-            <div>
-              <label><strong>Nombre y Teléfono del Tutor:</strong></label>
-              <input type="text" id="regTutor" placeholder="Ej: Carlos Pérez (3001234567)" required>
-            </div>
-
-            <div style="grid-column: 1 / -1; display: flex; gap: 10px; margin-top: 10px;">
-              <button type="submit" id="btnGuardar" class="btn btn-green" style="flex: 1;">
-                <i class="fa-solid fa-floppy-disk"></i> Guardar Ficha en Sistema
-              </button>
-              <button type="button" id="btnCancelarEdicion" class="btn btn-gray" style="display: none;">
-                Cancelar Edición
-              </button>
-            </div>
-          </form>
-          <p id="mensajeGuardado" style="font-weight: 600; margin-top: 10px;"></p>
-        </div>
-      </div>
-    </section>
-
-    <section id="vista-directorio" class="vista-seccion">
-      <div class="seccion-fichas">
-        <h2><i class="fa-solid fa-folder-tree"></i> Directorio de Estudiantes (Clasificado por Grados)</h2>
-        <p>Fichas activas distribuidas en casillas organizadas según el grado escolar correspondiente.</p>
-        
-        <div id="contenedorGrados" class="contenedor-grados">
-        
-        </div>
-      </div>
-    </section>
-
-    <section id="vista-integrantes" class="vista-seccion">
-      <div class="tarjeta-equipo">
-        <h2><i class="fa-solid fa-users-gear"></i> Equipo del Proyecto SAMGY</h2>
-        <ul class="lista-integrantes">
-          <li>
-            <i class="fa-solid fa-user-check"></i> 
-            <strong>Yaricel Paola Bayter Samera</strong> (@ybayter) — <span>QA / Tester</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-code"></i> 
-            <strong>Mathias Jose Hernandez Bermudez</strong> (@mhernadez-rgb) — <span>Desarrollador / Analista Lead</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-user-tie"></i> 
-            <strong>Gabriela De los Ángeles Martinez Navarro</strong> (@gmartinez-sys) — <span>Líder del Proyecto</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-palette"></i> 
-            <strong>Andrea Carolina Pallares Medina</strong> (@apallares-mdna) — <span>Diseñadora UX/UI</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-file-lines"></i> 
-            <strong>Sajoha Paola Vasquez Rodriguez</strong> (@svasquez-rdg) — <span>Documentadora / Comunicaciones</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="vista-sistema" class="vista-seccion">
-      <div class="contenido-grid">
-        <div class="tarjeta-info">
-          <h3><i class="fa-solid fa-hospital-user"></i> Presentación del Proyecto</h3>
-          <p>
-            En el área de enfermería del Colegio San Alberto Magno, la gestión de consultas y datos médicos suele llevarse a cabo de forma manual. 
-            <strong>SAMGY Salud</strong> nace para centralizar, estructurar y optimizar la información médica y académica del estudiantado en un entorno moderno y seguro.
-          </p>
-        </div>
-
-        <div class="tarjeta-info">
-          <h3><i class="fa-solid fa-bullseye"></i> Objetivos de SAMGY</h3>
-          <ul class="lista-objetivos">
-            <li><i class="fa-solid fa-database"></i> Crear una base de datos digital estudiantil.</li>
-            <li><i class="fa-solid fa-bolt"></i> Facilitar consultas y atenciones de enfermería rápidas.</li>
-            <li><i class="fa-solid fa-leaf"></i> Reducir y eliminar el uso de registros físicos en papel.</li>
-            <li><i class="fa-solid fa-chart-pie"></i> Generar reportes y actualizar fichas periódicamente.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2026 SAMGY SALUD — Colegio San Alberto Magno</p>
-    <p class="footer-sub">Desarrollado por: Yaricel Bayter, Mathias Hernández, Gabriela Martínez, Andrea Pallares, Sajoha Vasquez</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+  <h3>📂 Directorio de Estudiantes (Clasificado por Grados)</h3>
+  <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+    Fichas activas distribuidas en casillas organizadas según el grado escolar correspondiente.
+  </p>
+  <div id="contenedorGrados"></div>
+</div>
