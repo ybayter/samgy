@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
   <header class="navbar">
     <div class="nav-container">
       <div class="brand">
@@ -26,6 +25,7 @@
       <button id="menuToggle" class="menu-btn" aria-label="Abrir menú">&#9776;</button>
     </div>
 
+  
     <nav id="dropdownMenu" class="dropdown-menu">
       <ul>
         <li>
@@ -64,7 +64,7 @@
 
   <main class="main-content">
 
-
+    
     <section id="vista-inicio" class="vista-seccion activo">
       <div class="hero-banner">
         <span class="hero-tag">MÓDULO DE SALUD ESCOLAR</span>
@@ -87,23 +87,26 @@
         </div>
         <div class="metric-card">
           <div class="metric-info">
-            <span class="metric-label">ESTADO DEL SISTEMA</span>
-            <span class="metric-value">Activo</span>
-            <span class="metric-sub status-blue">Servidor operativo</span>
+            <span class="metric-label">TOTAL CONSULTAS</span>
+            <span id="metricTotalConsultas" class="metric-value">0</span>
+            <span class="metric-sub status-blue">Atenciones registradas</span>
           </div>
         </div>
       </div>
     </section>
 
+
     <section id="vista-fichas" class="vista-seccion">
       <h2>Módulo de Fichas Estudiantiles</h2>
+      
       <div class="search-container">
         <h3>Consultar Ficha Médica Rápidamente</h3>
         <div class="search-box">
           <input type="text" id="inputBusqueda" placeholder="Buscar por nombre o número de documento...">
           <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
+          <button type="button" id="btnLimpiarBusqueda" class="btn btn-secondary">Ver Todos</button>
         </div>
-        <div id="mensajeResultado"></div>
+        <div id="mensajeResultado" class="resultado-container"></div>
       </div>
 
       <div class="form-container">
@@ -111,30 +114,24 @@
           <h3 id="tituloFormulario">Registrar Nuevo Estudiante</h3>
         </div>
         <form id="formEstudiante">
-          <input type="hidden" id="regId">
+          <input type="hidden" id="regIndex" value="-1">
           <div class="form-grid">
             <div class="form-group">
               <label for="regNombre">Nombre completo</label>
-              <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
+              <input type="text" id="regNombre" placeholder="Ej: Alhan Kappel" required>
             </div>
             <div class="form-group">
               <label for="regDocumento">Documento de identidad</label>
               <input type="text" id="regDocumento" placeholder="Ej: 1001234567" required>
             </div>
-             <div class="form-group">
+            <div class="form-group">
               <label for="regGrado">Grado escolar</label>
               <select id="regGrado" required>
                 <option value="">Selecciona un grado...</option>
-                  <option value="1°">1°</option>
-                  <option value="2°">2°</option>
-                  <option value="3°">3°</option>
-                  <option value="4°">4°</option>
-                  <option value="5°">5°</option>
                 <option value="6°A">6°A</option>
-                  <option value="6°B">6°B</option>
-                  <option value="7°">7°</option>
-                 <option value="8°">8°</option>
-                 <option value="9°">9°</option>
+                <option value="7°A">7°A</option>
+                <option value="8°A">8°A</option>
+                <option value="9°A">9°A</option>
                 <option value="10°">10°</option>
                 <option value="11°">11°</option>
               </select>
@@ -153,7 +150,7 @@
             </div>
             <div class="form-actions">
               <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar Ficha</button>
-              <button type="button" id="btnCancelarEdicion" class="btn btn-secondary" style="display: none;">Cancelar</button>
+              <button type="button" id="btnCancelarEdicion" class="btn btn-secondary" style="display: none;">Cancelar Edición</button>
             </div>
           </div>
         </form>
@@ -163,27 +160,44 @@
 
     
     <section id="vista-consultas" class="vista-seccion">
-      <h2>Nueva Consulta / Registro</h2>
+      <h2>Nueva Consulta / Registro de Enfermería</h2>
       <div class="form-container">
         <form id="formConsulta">
           <div class="form-grid">
             <div class="form-group">
-              <label>Estudiante</label>
-              <input type="text" placeholder="Documento o Nombre" required>
+              <label for="consultaEstudiante">Seleccionar Estudiante</label>
+              <select id="consultaEstudiante" required>
+                <option value="">Seleccione un estudiante...</option>
+              </select>
             </div>
             <div class="form-group">
-              <label>Motivo</label>
-              <input type="text" placeholder="Motivo de la visita" required>
+              <label for="consultaFecha">Fecha y Hora</label>
+              <input type="datetime-local" id="consultaFecha" required>
+            </div>
+            <div class="form-group">
+              <label for="consultaMotivo">Símptomas / Motivo de la Visita</label>
+              <input type="text" id="consultaMotivo" placeholder="Ej: Dolor de cabeza, Fiebre, Golpee..." required>
+            </div>
+            <div class="form-group">
+              <label for="consultaTratamiento">Tratamiento / Medicamento</label>
+              <input type="text" id="consultaTratamiento" placeholder="Ej: Acetaminofén 500mg, Hielo..." required>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label for="consultaObservaciones">Observaciones adicionales</label>
+              <textarea id="consultaObservaciones" rows="3" placeholder="Ej: Se notifica al tutor telefónicamente..."></textarea>
             </div>
             <div class="form-actions">
-              <button type="button" class="btn btn-primary" onclick="alert('Consulta registrada correctamente.')">Guardar Consulta</button>
+              <button type="submit" class="btn btn-primary">Guardar Registro de Consulta</button>
             </div>
           </div>
         </form>
       </div>
+
+      <h3>Historial de Consultas Recientes</h3>
+      <div id="listaConsultas" class="tabla-container"></div>
     </section>
 
-
+ 
     <section id="vista-directorio" class="vista-seccion">
       <h2>Directorio por Grados</h2>
       <p class="section-desc">Fichas activas clasificadas según el grado escolar.</p>
@@ -191,15 +205,34 @@
     </section>
 
     <section id="vista-reportes" class="vista-seccion">
-      <h2>Reportes Sanitarios</h2>
+      <h2>Reportes Sanitarios y Estadísticas</h2>
       <div class="metrics-grid">
         <div class="metric-card">
           <div class="metric-info">
-            <span class="metric-label">VISITAS DEL MES</span>
-            <span class="metric-value">18</span>
-            <span class="metric-sub status-blue">Atenciones registradas</span>
+            <span class="metric-label">TOTAL ESTUDIANTES</span>
+            <span id="repTotalEstud" class="metric-value">0</span>
           </div>
         </div>
+        <div class="metric-card">
+          <div class="metric-info">
+            <span class="metric-label">TOTAL CONSULTAS</span>
+            <span id="repTotalConsultas" class="metric-value">0</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-info">
+            <span class="metric-label">CON ALERGIAS REGISTRADAS</span>
+            <span id="repConAlergias" class="metric-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3>Resumen General de Estudiantes</h3>
+          <button class="btn btn-secondary" onclick="window.print()">Imprimir / Exportar Reporte</button>
+        </div>
+        <div id="tablaReportes" class="tabla-container"></div>
       </div>
     </section>
 
@@ -212,5 +245,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-         
