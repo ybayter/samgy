@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SAMGY Salud - Base de Datos Escolar</title>
- <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 
   <header class="navbar">
     <div class="nav-container">
       <div class="brand">
-        <div class="logo-box">S</div>
+        <div class="logo-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58 1.12 3.82-.26 5.6.87 1.34 1.34 2.87 1.34 4.4 0 5.52-4.25 10-9.5 10S2.5 18.52 2.5 13c0-1.53.47-3.06 1.34-4.4-1.38-1.78-1.66-5.02-.26-5.6 1.39-.58 4.64.26 6.42 2.26.65-.17 1.33-.26 2-.26z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M10 16s1 1 2 1 2-1 2-1"/></svg>
+        </div>
         <div>
           <div class="brand-title">
             <span class="brand-name">SAMGY</span>
@@ -25,13 +28,42 @@
 
     <nav id="dropdownMenu" class="dropdown-menu">
       <ul>
-        <li><a onclick="cambiarPestana('inicio')">Inicio</a></li>
-        <li><a onclick="cambiarPestana('fichas')">Módulo de Fichas Estudiantiles</a></li>
+        <li>
+          <a onclick="cambiarPestana('inicio')">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a onclick="cambiarPestana('fichas')">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h4"/><path d="M6 12h8"/><path d="M6 16h12"/></svg>
+            Fichas Estudiantiles
+          </a>
+        </li>
+        <li>
+          <a onclick="cambiarPestana('consultas')">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+            Nueva Consulta / Registro
+          </a>
+        </li>
+        <li>
+          <a onclick="cambiarPestana('directorio')">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Directorio por Grados
+          </a>
+        </li>
+        <li>
+          <a onclick="cambiarPestana('reportes')">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Reportes
+          </a>
+        </li>
       </ul>
     </nav>
   </header>
 
   <main class="main-content">
+
 
     <section id="vista-inicio" class="vista-seccion activo">
       <div class="hero-banner">
@@ -39,7 +71,6 @@
         <h1 class="hero-title">Sistema SAMGY de Enfermería</h1>
         <p class="hero-description">
           Gestión inteligente, eficiente y digital para la organización y control sanitario de la comunidad estudiantil.
-          Reducción de papel y atención rápida de consultas.
         </p>
         <div class="hero-actions">
           <button type="button" class="btn btn-white" onclick="cambiarPestana('fichas')">Registrar Nueva Visita / Estudiante</button>
@@ -53,23 +84,19 @@
             <span id="metricTotalEstudiantes" class="metric-value">0</span>
             <span class="metric-sub status-green">Fichas en base de datos</span>
           </div>
-          <div class="metric-icon icon-blue">E</div>
         </div>
-
         <div class="metric-card">
           <div class="metric-info">
             <span class="metric-label">ESTADO DEL SISTEMA</span>
             <span class="metric-value">Activo</span>
             <span class="metric-sub status-blue">Servidor operativo</span>
           </div>
-          <div class="metric-icon icon-cyan">S</div>
         </div>
       </div>
     </section>
 
     <section id="vista-fichas" class="vista-seccion">
       <h2>Módulo de Fichas Estudiantiles</h2>
-
       <div class="search-container">
         <h3>Consultar Ficha Médica Rápidamente</h3>
         <div class="search-box">
@@ -82,24 +109,19 @@
       <div class="form-container">
         <div class="form-header">
           <h3 id="tituloFormulario">Registrar Nuevo Estudiante</h3>
-          <p class="form-subtitle">Ingresa los datos personales y de salud para guardar el registro en el sistema</p>
         </div>
-
         <form id="formEstudiante">
           <input type="hidden" id="regId">
-          
           <div class="form-grid">
             <div class="form-group">
               <label for="regNombre">Nombre completo</label>
               <input type="text" id="regNombre" placeholder="Ej: Juan Pérez" required>
             </div>
-
             <div class="form-group">
               <label for="regDocumento">Documento de identidad</label>
               <input type="text" id="regDocumento" placeholder="Ej: 1001234567" required>
             </div>
-
-            <div class="form-group">
+             <div class="form-group">
               <label for="regGrado">Grado escolar</label>
               <select id="regGrado" required>
                 <option value="">Selecciona un grado...</option>
@@ -117,35 +139,68 @@
                 <option value="11°">11°</option>
               </select>
             </div>
-
             <div class="form-group">
               <label for="regSangre">Tipo de sangre</label>
               <input type="text" id="regSangre" placeholder="Ej: O+" required>
             </div>
-
             <div class="form-group">
               <label for="regAlergias">Alergias / Condiciones médicas</label>
               <input type="text" id="regAlergias" placeholder="Ej: Penicilina o Ninguna">
             </div>
-
             <div class="form-group">
               <label for="regTutor">Nombre y Teléfono del Tutor</label>
               <input type="text" id="regTutor" placeholder="Ej: Carlos Pérez (3001234567)" required>
             </div>
-
             <div class="form-actions">
-              <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar Ficha en Sistema</button>
-              <button type="button" id="btnCancelarEdicion" class="btn btn-secondary" style="display: none;">Cancelar Edición</button>
+              <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar Ficha</button>
+              <button type="button" id="btnCancelarEdicion" class="btn btn-secondary" style="display: none;">Cancelar</button>
             </div>
           </div>
         </form>
         <p id="mensajeGuardado"></p>
       </div>
+    </section>
 
-      <h3>Directorio de Estudiantes (Clasificado por Grados)</h3>
-      <p class="section-desc">Fichas activas distribuidas en casillas organizadas según el grado escolar correspondiente.</p>
-      
+    
+    <section id="vista-consultas" class="vista-seccion">
+      <h2>Nueva Consulta / Registro</h2>
+      <div class="form-container">
+        <form id="formConsulta">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Estudiante</label>
+              <input type="text" placeholder="Documento o Nombre" required>
+            </div>
+            <div class="form-group">
+              <label>Motivo</label>
+              <input type="text" placeholder="Motivo de la visita" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-primary" onclick="alert('Consulta registrada correctamente.')">Guardar Consulta</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+
+    <section id="vista-directorio" class="vista-seccion">
+      <h2>Directorio por Grados</h2>
+      <p class="section-desc">Fichas activas clasificadas según el grado escolar.</p>
       <div id="contenedorGrados"></div>
+    </section>
+
+    <section id="vista-reportes" class="vista-seccion">
+      <h2>Reportes Sanitarios</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-info">
+            <span class="metric-label">VISITAS DEL MES</span>
+            <span class="metric-value">18</span>
+            <span class="metric-sub status-blue">Atenciones registradas</span>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
@@ -157,3 +212,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+         
