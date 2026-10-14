@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-
 const datosIniciales = [
   {
     nombre: "Alhan Kappel",
@@ -20,50 +17,39 @@ const datosIniciales = [
   }
 ];
 
-export default function App() {
-  const [vistaActiva, setVistaActiva] = useState('inicio');
-  const [menuAbierto, setMenuAbierto] = useState(false);
+function App() {
+  const [vistaActiva, setVistaActiva] = React.useState('inicio');
+  const [menuAbierto, setMenuAbierto] = React.useState(false);
   
-  const [estudiantes, setEstudiantes] = useState(() => {
+  const [estudiantes, setEstudiantes] = React.useState(() => {
     const saved = localStorage.getItem('samgy_estudiantes');
     return saved ? JSON.parse(saved) : datosIniciales;
   });
 
-  const [consultas, setConsultas] = useState(() => {
+  const [consultas, setConsultas] = React.useState(() => {
     const saved = localStorage.getItem('samgy_consultas');
     return saved ? JSON.parse(saved) : [];
   });
 
-
-  const [busqueda, setBusqueda] = useState('');
-
- 
-  const [editIndex, setEditIndex] = useState(-1);
-  const [formEstudiante, setFormEstudiante] = useState({
-    nombre: '',
-    documento: '',
-    grado: '',
-    tipoSangre: '',
-    alergias: '',
-    tutor: ''
-  });
-
+  const [busqueda, setBusqueda] = React.useState('');
+  const [editIndex, setEditIndex] = React.useState(-1);
   
-  const [formConsulta, setFormConsulta] = useState({
-    estudiante: '',
-    fecha: '',
-    motivo: '',
-    tratamiento: '',
-    observaciones: ''
+  const [formEstudiante, setFormEstudiante] = React.useState({
+    nombre: '', documento: '', grado: '', tipoSangre: '', alergias: '', tutor: ''
   });
 
-  useEffect(() => {
+  const [formConsulta, setFormConsulta] = React.useState({
+    estudiante: '', fecha: '', motivo: '', tratamiento: '', observaciones: ''
+  });
+
+  React.useEffect(() => {
     localStorage.setItem('samgy_estudiantes', JSON.stringify(estudiantes));
   }, [estudiantes]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     localStorage.setItem('samgy_consultas', JSON.stringify(consultas));
   }, [consultas]);
+
   const handleGuardarEstudiante = (e) => {
     e.preventDefault();
     if (editIndex >= 0) {
@@ -85,7 +71,7 @@ export default function App() {
   };
 
   const handleEliminarEstudiante = (index) => {
-    if (window.confirm(`¿Deseas eliminar a ${estudiantes[index].nombre}?`)) {
+    if (window.confirm(`¿Deseas eliminar la ficha de ${estudiantes[index].nombre}?`)) {
       setEstudiantes(estudiantes.filter((_, i) => i !== index));
     }
   };
@@ -103,8 +89,8 @@ export default function App() {
   );
 
   return (
-    <div className="app-container">
-      {/* NAVBAR */}
+    <div className="app-main-layout">
+      {/* BARRA SUPERIOR Y MENÚ DE TRES RAYITAS */}
       <header className="navbar">
         <div className="nav-container">
           <div className="brand">
@@ -125,13 +111,39 @@ export default function App() {
           <button className="menu-btn" onClick={() => setMenuAbierto(!menuAbierto)}>&#9776;</button>
         </div>
 
+        {/* MENÚ DESPLEGABLE AZUL CON ICONOS */}
         <nav className={`dropdown-menu ${menuAbierto ? 'active' : ''}`}>
           <ul>
-            <li><a onClick={() => { setVistaActiva('inicio'); setMenuAbierto(false); }}>Inicio</a></li>
-            <li><a onClick={() => { setVistaActiva('fichas'); setMenuAbierto(false); }}>Fichas Estudiantiles</a></li>
-            <li><a onClick={() => { setVistaActiva('consultas'); setMenuAbierto(false); }}>Nueva Consulta / Registro</a></li>
-            <li><a onClick={() => { setVistaActiva('directorio'); setMenuAbierto(false); }}>Directorio por Grados</a></li>
-            <li><a onClick={() => { setVistaActiva('reportes'); setMenuAbierto(false); }}>Reportes</a></li>
+            <li>
+              <a onClick={() => { setVistaActiva('inicio'); setMenuAbierto(false); }}>
+                <svg className="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a onClick={() => { setVistaActiva('fichas'); setMenuAbierto(false); }}>
+                <svg className="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h4"/><path d="M6 12h8"/><path d="M6 16h12"/></svg>
+                Fichas Estudiantiles
+              </a>
+            </li>
+            <li>
+              <a onClick={() => { setVistaActiva('consultas'); setMenuAbierto(false); }}>
+                <svg className="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                Nueva Consulta / Registro
+              </a>
+            </li>
+            <li>
+              <a onClick={() => { setVistaActiva('directorio'); setMenuAbierto(false); }}>
+                <svg className="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Directorio por Grados
+              </a>
+            </li>
+            <li>
+              <a onClick={() => { setVistaActiva('reportes'); setMenuAbierto(false); }}>
+                <svg className="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                Reportes
+              </a>
+            </li>
           </ul>
         </nav>
       </header>
@@ -139,210 +151,11 @@ export default function App() {
       {/* CONTENIDO PRINCIPAL */}
       <main className="main-content">
         
-        {/* VISTA: INICIO */}
+        {/* VISTA 1: INICIO */}
         {vistaActiva === 'inicio' && (
-          <section className="vista-seccion activo">
+          <section className="vista-seccion">
             <div className="hero-banner">
               <span className="hero-tag">MÓDULO DE SALUD ESCOLAR</span>
               <h1 className="hero-title">Sistema SAMGY de Enfermería</h1>
-              <p className="hero-description">Gestión inteligente, eficiente y digital para la comunidad estudiantil.</p>
-              <button className="btn btn-white" onClick={() => setVistaActiva('fichas')}>Registrar Estudiante</button>
-            </div>
-
-            <div className="metrics-grid">
-              <div className="metric-card">
-                <span className="metric-label">TOTAL ESTUDIANTES</span>
-                <span className="metric-value">{estudiantes.length}</span>
-              </div>
-              <div className="metric-card">
-                <span className="metric-label">TOTAL CONSULTAS</span>
-                <span className="metric-value">{consultas.length}</span>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* VISTA: FICHAS */}
-        {vistaActiva === 'fichas' && (
-          <section className="vista-seccion activo">
-            <h2>Módulo de Fichas Estudiantiles</h2>
-            
-            <div className="search-container">
-              <h3>Consultar Ficha Médica Rápidamente</h3>
-              <div className="search-box">
-                <input 
-                  type="text" 
-                  placeholder="Buscar por nombre o documento..." 
-                  value={busqueda} 
-                  onChange={(e) => setBusqueda(e.target.value)}
-                />
-              </div>
-
-              <div className="resultado-container">
-                {estudiantesFiltrados.map((est) => {
-                  const idx = estudiantes.indexOf(est);
-                  return (
-                    <div key={idx} className="card-estudiante">
-                      <div>
-                        <h4>{est.nombre} — Grado: {est.grado}</h4>
-                        <p><strong>Doc:</strong> {est.documento} | <strong>Sangre:</strong> {est.tipoSangre}</p>
-                        <p><strong>Alergias:</strong> {est.alergias} | <strong>Tutor:</strong> {est.tutor}</p>
-                      </div>
-                      <div className="card-estudiante-actions">
-                        <button className="btn btn-secondary btn-sm" onClick={() => handleEditarEstudiante(idx)}>Editar</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => handleEliminarEstudiante(idx)}>Eliminar</button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="form-container">
-              <h3>{editIndex >= 0 ? "Editar Estudiante" : "Registrar Nuevo Estudiante"}</h3>
-              <form onSubmit={handleGuardarEstudiante} className="form-grid">
-                <div className="form-group">
-                  <label>Nombre completo</label>
-                  <input type="text" required value={formEstudiante.nombre} onChange={e => setFormEstudiante({...formEstudiante, nombre: e.target.value})} />
-                </div>
-                <div className="form-group">
-                  <label>Documento de identidad</label>
-                  <input type="text" required value={formEstudiante.documento} onChange={e => setFormEstudiante({...formEstudiante, documento: e.target.value})} />
-                </div>
-                <div className="form-group">
-                  <label>Grado escolar</label>
-                  <select required value={formEstudiante.grado} onChange={e => setFormEstudiante({...formEstudiante, grado: e.target.value})}>
-                    <option value="">Seleccionar...</option>
-                    <option value="6°A">6°A</option>
-                    <option value="10°">10°</option>
-                    <option value="11°">11°</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Tipo de sangre</label>
-                  <input type="text" required value={formEstudiante.tipoSangre} onChange={e => setFormEstudiante({...formEstudiante, tipoSangre: e.target.value})} />
-                </div>
-                <div className="form-group">
-                  <label>Alergias</label>
-                  <input type="text" value={formEstudiante.alergias} onChange={e => setFormEstudiante({...formEstudiante, alergias: e.target.value})} />
-                </div>
-                <div className="form-group">
-                  <label>Tutor</label>
-                  <input type="text" required value={formEstudiante.tutor} onChange={e => setFormEstudiante({...formEstudiante, tutor: e.target.value})} />
-                </div>
-                <div className="form-actions">
-                  <button type="submit" className="btn btn-primary">{editIndex >= 0 ? "Actualizar" : "Guardar"}</button>
-                  {editIndex >= 0 && (
-                    <button type="button" className="btn btn-secondary" onClick={() => { setEditIndex(-1); setFormEstudiante({ nombre: '', documento: '', grado: '', tipoSangre: '', alergias: '', tutor: '' }); }}>Cancelar</button>
-                  )}
-                </div>
-              </form>
-            </div>
-          </section>
-        )}
-
-        {/* VISTA: CONSULTAS */}
-        {vistaActiva === 'consultas' && (
-          <section className="vista-seccion activo">
-            <h2>Nueva Consulta / Registro de Enfermería</h2>
-            <div className="form-container">
-              <form onSubmit={handleGuardarConsulta} className="form-grid">
-                <div className="form-group">
-                  <label>Estudiante</label>
-                  <select required value={formConsulta.estudiante} onChange={e => setFormConsulta({...formConsulta, estudiante: e.target.value})}>
-                    <option value="">Seleccione...</option>
-                    {estudiantes.map((e, idx) => (
-                      <option key={idx} value={e.nombre}>{e.nombre} ({e.grado})</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Fecha y Hora</label>
-                  <input type="datetime-local" required value={formConsulta.fecha} onChange={e => setFormConsulta({...formConsulta, fecha: e.target.value})} />
-                </div>
-                <div className="form-group">
-                  <label>Motivo</label>
-                  <input type="text" required value={formConsulta.motivo} onChange={e => setFormConsulta({...formConsulta, motivo: e.target.value})} />
-                </div>
-                <div className="form-group">
-                  <label>Tratamiento</label>
-                  <input type="text" required value={formConsulta.tratamiento} onChange={e => setFormConsulta({...formConsulta, tratamiento: e.target.value})} />
-                </div>
-                <div className="form-actions">
-                  <button type="submit" className="btn btn-primary">Guardar Consulta</button>
-                </div>
-              </form>
-            </div>
-
-            <h3>Historial de Consultas Recientes</h3>
-            <div className="tabla-container">
-              <table>
-                <thead>
-                  <tr><th>Estudiante</th><th>Fecha</th><th>Motivo</th><th>Tratamiento</th></tr>
-                </thead>
-                <tbody>
-                  {consultas.map((c, idx) => (
-                    <tr key={idx}>
-                      <td><strong>{c.estudiante}</strong></td>
-                      <td>{c.fecha}</td>
-                      <td>{c.motivo}</td>
-                      <td>{c.tratamiento}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        )}
-
-        {/* VISTA: DIRECTORIO */}
-        {vistaActiva === 'directorio' && (
-          <section className="vista-seccion activo">
-            <h2>Directorio por Grados</h2>
-            {estudiantes.map((est, idx) => (
-              <div key={idx} className="card-estudiante" style={{ marginTop: '10px' }}>
-                <div>
-                  <strong>{est.nombre}</strong> (Grado {est.grado}) — Doc: {est.documento} | Sangre: {est.tipoSangre}
-                </div>
-                <button className="btn btn-danger btn-sm" onClick={() => handleEliminarEstudiante(idx)}>Eliminar</button>
-              </div>
-            ))}
-          </section>
-        )}
-
-        {/* VISTA: REPORTES */}
-        {vistaActiva === 'reportes' && (
-          <section className="vista-seccion activo">
-            <h2>Reportes Sanitarios</h2>
-            <div className="form-container">
-              <button className="btn btn-secondary" onClick={() => window.print()}>Imprimir / Exportar Reporte</button>
-              <div className="tabla-container" style={{ marginTop: '16px' }}>
-                <table>
-                  <thead>
-                    <tr><th>Nombre</th><th>Documento</th><th>Grado</th><th>Sangre</th><th>Alergias</th></tr>
-                  </thead>
-                  <tbody>
-                    {estudiantes.map((e, idx) => (
-                      <tr key={idx}>
-                        <td>{e.nombre}</td>
-                        <td>{e.documento}</td>
-                        <td>{e.grado}</td>
-                        <td>{e.tipoSangre}</td>
-                        <td>{e.alergias}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-        )}
-
-      </main>
-
-      <footer className="footer">
-        <p>SAMGY Salud — Colegio San Alberto Magno &copy; 2026</p>
-      </footer>
-    </div>
-  );
-}
+              <p className="hero-description">Gestión inteligente, eficiente y digital para la organización y control sanitario de la comunidad estudiantil.</p>
+              <button className="
