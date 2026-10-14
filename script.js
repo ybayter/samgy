@@ -5,7 +5,7 @@ const datosIniciales = [
     grado: "11°",
     tipoSangre: "O+",
     alergias: "Ninguna",
-    tutor: "Carlos Pérez (3001234567)"
+    tutor: "Lizet Calderón (3001234567)"
   },
   {
     nombre: "María Gómez",
@@ -90,7 +90,7 @@ function App() {
 
   return (
     <div className="app-main-layout">
-      {/* BARRA SUPERIOR Y MENÚ DE TRES RAYITAS */}
+   
       <header className="navbar">
         <div className="nav-container">
           <div className="brand">
@@ -111,7 +111,6 @@ function App() {
           <button className="menu-btn" onClick={() => setMenuAbierto(!menuAbierto)}>&#9776;</button>
         </div>
 
-        {/* MENÚ DESPLEGABLE AZUL CON ICONOS */}
         <nav className={`dropdown-menu ${menuAbierto ? 'active' : ''}`}>
           <ul>
             <li>
@@ -148,10 +147,9 @@ function App() {
         </nav>
       </header>
 
-      {/* CONTENIDO PRINCIPAL */}
+ 
       <main className="main-content">
-        
-        {/* VISTA 1: INICIO */}
+       
         {vistaActiva === 'inicio' && (
           <section className="vista-seccion">
             <div className="hero-banner">
@@ -261,7 +259,6 @@ function App() {
           </section>
         )}
 
-        {/* VISTA 3: NUEVA CONSULTA */}
         {vistaActiva === 'consultas' && (
           <section className="vista-seccion">
             <h2>Nueva Consulta / Registro de Enfermería</h2>
@@ -326,7 +323,7 @@ function App() {
           </section>
         )}
 
-        {/* VISTA 4: DIRECTORIO */}
+       
         {vistaActiva === 'directorio' && (
           <section className="vista-seccion">
             <h2>Directorio por Grados</h2>
@@ -342,7 +339,7 @@ function App() {
           </section>
         )}
 
-        {/* VISTA 5: REPORTES */}
+       
         {vistaActiva === 'reportes' && (
           <section className="vista-seccion">
             <h2>Reportes Sanitarios y Estadísticas</h2>
