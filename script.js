@@ -158,4 +158,247 @@ function App() {
               <span className="hero-tag">MÓDULO DE SALUD ESCOLAR</span>
               <h1 className="hero-title">Sistema SAMGY de Enfermería</h1>
               <p className="hero-description">Gestión inteligente, eficiente y digital para la organización y control sanitario de la comunidad estudiantil.</p>
-              <button className="
+              <button className="btn btn-white" onClick={() => setVistaActiva('fichas')}>Registrar Estudiante</button>
+            </div>
+
+            <div className="metrics-grid">
+              <div className="metric-card">
+                <span className="metric-label">TOTAL ESTUDIANTES</span>
+                <span className="metric-value">{estudiantes.length}</span>
+              </div>
+              <div className="metric-card">
+                <span className="metric-label">TOTAL CONSULTAS</span>
+                <span className="metric-value">{consultas.length}</span>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* VISTA 2: FICHAS Y BÚSQUEDA COMPLETA */}
+        {vistaActiva === 'fichas' && (
+          <section className="vista-seccion">
+            <h2>Módulo de Fichas Estudiantiles</h2>
+            
+            <div className="search-container">
+              <h3>Consultar Ficha Médica Rápidamente</h3>
+              <div className="search-box">
+                <input 
+                  type="text" 
+                  placeholder="Buscar por nombre o número de documento..." 
+                  value={busqueda} 
+                  onChange={(e) => setBusqueda(e.target.value)}
+                />
+                {busqueda && <button className="btn btn-secondary" onClick={() => setBusqueda('')}>Limpiar</button>}
+              </div>
+
+              <div className="resultado-container">
+                {estudiantesFiltrados.length === 0 ? (
+                  <p style={{ color: 'var(--text-muted)' }}>No se encontraron estudiantes.</p>
+                ) : (
+                  estudiantesFiltrados.map((est) => {
+                    const idx = estudiantes.indexOf(est);
+                    return (
+                      <div key={idx} className="card-estudiante">
+                        <div>
+                          <h4>{est.nombre} — Grado: {est.grado}</h4>
+                          <p><strong>Documento:</strong> {est.documento} | <strong>Tipo de Sangre:</strong> {est.tipoSangre}</p>
+                          <p><strong>Alergias / Condición:</strong> {est.alergias} | <strong>Tutor:</strong> {est.tutor}</p>
+                        </div>
+                        <div className="card-estudiante-actions">
+                          <button className="btn btn-secondary btn-sm" onClick={() => handleEditarEstudiante(idx)}>Editar</button>
+                          <button className="btn btn-danger btn-sm" onClick={() => handleEliminarEstudiante(idx)}>Eliminar</button>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+
+            <div className="form-container">
+              <h3>{editIndex >= 0 ? "Editar Ficha de Estudiante" : "Registrar Nuevo Estudiante"}</h3>
+              <form onSubmit={handleGuardarEstudiante} className="form-grid">
+                <div className="form-group">
+                  <label>Nombre completo</label>
+                  <input type="text" placeholder="Ej: Alhan Kappel" required value={formEstudiante.nombre} onChange={e => setFormEstudiante({...formEstudiante, nombre: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Documento de identidad</label>
+                  <input type="text" placeholder="Ej: 1001234567" required value={formEstudiante.documento} onChange={e => setFormEstudiante({...formEstudiante, documento: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Grado escolar</label>
+                  <select required value={formEstudiante.grado} onChange={e => setFormEstudiante({...formEstudiante, grado: e.target.value})}>
+                    <option value="">Selecciona un grado...</option>
+                    <option value="6°A">6°A</option>
+                    <option value="7°A">7°A</option>
+                    <option value="8°A">8°A</option>
+                    <option value="9°A">9°A</option>
+                    <option value="10°">10°</option>
+                    <option value="11°">11°</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Tipo de sangre</label>
+                  <input type="text" placeholder="Ej: O+" required value={formEstudiante.tipoSangre} onChange={e => setFormEstudiante({...formEstudiante, tipoSangre: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Alergias / Condiciones</label>
+                  <input type="text" placeholder="Ej: Penicilina o Ninguna" value={formEstudiante.alergias} onChange={e => setFormEstudiante({...formEstudiante, alergias: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Nombre y Teléfono del Tutor</label>
+                  <input type="text" placeholder="Ej: Carlos Pérez (3001234567)" required value={formEstudiante.tutor} onChange={e => setFormEstudiante({...formEstudiante, tutor: e.target.value})} />
+                </div>
+                <div className="form-actions">
+                  <button type="submit" className="btn btn-primary">{editIndex >= 0 ? "Actualizar Ficha" : "Guardar Ficha"}</button>
+                  {editIndex >= 0 && (
+                    <button type="button" className="btn btn-secondary" onClick={() => { setEditIndex(-1); setFormEstudiante({ nombre: '', documento: '', grado: '', tipoSangre: '', alergias: '', tutor: '' }); }}>Cancelar</button>
+                  )}
+                </div>
+              </form>
+            </div>
+          </section>
+        )}
+
+        {/* VISTA 3: NUEVA CONSULTA */}
+        {vistaActiva === 'consultas' && (
+          <section className="vista-seccion">
+            <h2>Nueva Consulta / Registro de Enfermería</h2>
+            <div className="form-container">
+              <form onSubmit={handleGuardarConsulta} className="form-grid">
+                <div className="form-group">
+                  <label>Seleccionar Estudiante</label>
+                  <select required value={formConsulta.estudiante} onChange={e => setFormConsulta({...formConsulta, estudiante: e.target.value})}>
+                    <option value="">Seleccione un estudiante...</option>
+                    {estudiantes.map((e, idx) => (
+                      <option key={idx} value={e.nombre}>{e.nombre} ({e.grado}) - Doc: {e.documento}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Fecha y Hora</label>
+                  <input type="datetime-local" required value={formConsulta.fecha} onChange={e => setFormConsulta({...formConsulta, fecha: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Síntomas / Motivo</label>
+                  <input type="text" placeholder="Ej: Dolor de cabeza, Golpee..." required value={formConsulta.motivo} onChange={e => setFormConsulta({...formConsulta, motivo: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Tratamiento / Medicamento</label>
+                  <input type="text" placeholder="Ej: Hielo, Reposo 15 min..." required value={formConsulta.tratamiento} onChange={e => setFormConsulta({...formConsulta, tratamiento: e.target.value})} />
+                </div>
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label>Observaciones</label>
+                  <textarea rows="3" placeholder="Ej: Se notifica al tutor..." value={formConsulta.observaciones} onChange={e => setFormConsulta({...formConsulta, observaciones: e.target.value})} />
+                </div>
+                <div className="form-actions">
+                  <button type="submit" className="btn btn-primary">Guardar Registro de Consulta</button>
+                </div>
+              </form>
+            </div>
+
+            <h3>Historial de Consultas Recientes</h3>
+            <div className="tabla-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Estudiante</th>
+                    <th>Fecha / Hora</th>
+                    <th>Motivo</th>
+                    <th>Tratamiento</th>
+                    <th>Observaciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {consultas.slice().reverse().map((c, idx) => (
+                    <tr key={idx}>
+                      <td><strong>{c.estudiante}</strong></td>
+                      <td>{c.fecha.replace("T", " ")}</td>
+                      <td>{c.motivo}</td>
+                      <td>{c.tratamiento}</td>
+                      <td>{c.observaciones || '-'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        {/* VISTA 4: DIRECTORIO */}
+        {vistaActiva === 'directorio' && (
+          <section className="vista-seccion">
+            <h2>Directorio por Grados</h2>
+            <p className="section-desc">Fichas activas clasificadas según el grado escolar.</p>
+            {estudiantes.map((est, idx) => (
+              <div key={idx} className="card-estudiante" style={{ marginTop: '8px' }}>
+                <div>
+                  <strong>{est.nombre}</strong> — Doc: {est.documento} | Sangre: {est.tipoSangre} | Alergias: {est.alergias}
+                </div>
+                <button className="btn btn-danger btn-sm" onClick={() => handleEliminarEstudiante(idx)}>Eliminar</button>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* VISTA 5: REPORTES */}
+        {vistaActiva === 'reportes' && (
+          <section className="vista-seccion">
+            <h2>Reportes Sanitarios y Estadísticas</h2>
+            <div className="metrics-grid">
+              <div className="metric-card">
+                <span className="metric-label">TOTAL ESTUDIANTES</span>
+                <span className="metric-value">{estudiantes.length}</span>
+              </div>
+              <div className="metric-card">
+                <span className="metric-label">TOTAL CONSULTAS</span>
+                <span className="metric-value">{consultas.length}</span>
+              </div>
+            </div>
+
+            <div className="form-container">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3>Resumen General de Estudiantes</h3>
+                <button className="btn btn-secondary" onClick={() => window.print()}>Imprimir / Exportar Reporte</button>
+              </div>
+              <div className="tabla-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Documento</th>
+                      <th>Grado</th>
+                      <th>Tipo Sangre</th>
+                      <th>Alergias</th>
+                      <th>Tutor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {estudiantes.map((e, idx) => (
+                      <tr key={idx}>
+                        <td>{e.nombre}</td>
+                        <td>{e.documento}</td>
+                        <td>{e.grado}</td>
+                        <td>{e.tipoSangre}</td>
+                        <td>{e.alergias}</td>
+                        <td>{e.tutor}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        )}
+
+      </main>
+
+      <footer className="footer">
+        <p>SAMGY Salud — Colegio San Alberto Magno &copy; 2026</p>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
